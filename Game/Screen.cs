@@ -1,51 +1,59 @@
-using System.Diagnostics;
+namespace Tictactoe;
 
-namespace Tictactoe
+public class Screen
 {
-    class Screen
+    private string? transientMessage = null;
+    private IConsoleWrapper console;
+
+    public void SetTransientMessage(string message)
     {
-        private string? transientMessage = null;
+        transientMessage = message;
+    }
 
-        public void SetTransientMessage(string message)
-        {
-            transientMessage = message;
-        }
+    public string Prompt { get; set; } = string.Empty;
 
-        public string Prompt { get; set; } = string.Empty;
+    public Screen(IConsoleWrapper console)
+    {
+        this.console = console;
+    }
 
-        public void Start()
-        {
-            Console.CursorVisible = false;
-            Console.Clear();
-        }
+    public void Start()
+    {
+        console.CursorVisible = false;
+        console.Clear();
+    }
 
-        public void DrawGrid()
-        {
-            Console.WriteLine(" | | ");
-            Console.WriteLine("-----");
-            Console.WriteLine(" | | ");
-            Console.WriteLine("-----");
-            Console.WriteLine(" | | ");
-        }
+    public void DrawGrid()
+    {
+        console.WriteLine(" | | ");
+        console.WriteLine("-----");
+        console.WriteLine(" | | ");
+        console.WriteLine("-----");
+        console.WriteLine(" | | ");
+    }
 
-        public void DrawGlyph(int gridX, int gridY, char glyph)
-        {
-            var (left, top) = Console.GetCursorPosition();
-            Console.SetCursorPosition(gridX * 2, gridY * 2);
-            Console.Write(glyph);
-            Console.SetCursorPosition(left, top);
-        }
+    public void DrawGlyph(int gridX, int gridY, char glyph)
+    {
+        var (left, top) = console.GetCursorPosition();
+        console.SetCursorPosition(gridX * 2, gridY * 2);
+        console.Write(glyph);
+        console.SetCursorPosition(left, top);
+    }
 
-        public void Finish()
-        {
-            if (!string.IsNullOrWhiteSpace(transientMessage))
-                Console.WriteLine(transientMessage);
-            transientMessage = null;
+    public void WriteLine(string line)
+    {
+        console.WriteLine(line);
+    }
 
-            if (!string.IsNullOrEmpty(Prompt))
-                Console.Write(Prompt);
+    public void Finish()
+    {
+        if (!string.IsNullOrWhiteSpace(transientMessage))
+            console.WriteLine(transientMessage);
+        transientMessage = null;
 
-            Console.CursorVisible = true;
-        }
+        if (!string.IsNullOrEmpty(Prompt))
+            console.Write(Prompt);
+
+        console.CursorVisible = true;
     }
 }
