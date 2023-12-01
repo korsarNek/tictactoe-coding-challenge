@@ -11,3 +11,6 @@ Linux
 `sudo ./dotnet-install.sh --architecture x64 --install-dir /usr/share/dotnet/ --runtime dotnet --version 7.0.14`
 
 dotnet build
+dotnet test
+
+dotnet run --project Game

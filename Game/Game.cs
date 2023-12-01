@@ -13,7 +13,6 @@ public class Game
         this.state = state;
         this.statistics = statistics;
         this.parser = parser;
-        screen.Prompt = $"Player {state.ActivePlayer}:";
     }
 
     /// <summary>
@@ -22,6 +21,18 @@ public class Game
     /// <param name="input"></param>
     /// <returns>Returns true if the game continues or false if it should exit.</returns>
     public bool RunFrame(string input)
+    {
+        if (!ProcessInput(input))
+            return false;
+
+        CheckGameState();
+
+        Draw();
+
+        return true;
+    }
+
+    private bool ProcessInput(string input)
     {
         if (input == "e")
             return false;
@@ -56,6 +67,11 @@ public class Game
             }
         }
 
+        return true;
+    }
+
+    private void CheckGameState()
+    {
         var winner = state.HasSomeoneWon();
         if (winner != null)
         {
@@ -74,7 +90,10 @@ public class Game
         }
         else
             screen.Prompt = $"Player {state.ActivePlayer}:";
+    }
 
+    private void Draw()
+    {
         if (state.ActiveView == View.Game || state.ActiveView == View.EndGame)
         {
             screen.Start();
@@ -101,7 +120,5 @@ public class Game
 
             screen.Finish();
         }
-
-        return true;
     }
 }

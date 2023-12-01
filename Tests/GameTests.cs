@@ -154,7 +154,8 @@ public class GameTests
     [Test]
     public void CloseGame()
     {
-        //TODO: maybe a better error state, theoretically I would have to check the returns of the other runFrames too
+        Assert.IsTrue(game.RunFrame(""));
+        // Game loop checks the return value.
         Assert.IsFalse(game.RunFrame("e"));
     }
 }
