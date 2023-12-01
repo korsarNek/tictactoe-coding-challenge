@@ -54,13 +54,35 @@ public class GameStateTests
     }
 
     [Test]
-    public void TestLineBreak()
+    public void TestAcrossRows()
     {
         state.Grid[1, 1] = Player.X;
         state.Grid[1, 2] = Player.X;
         state.Grid[2, 0] = Player.X;
 
         Assert.AreEqual(null, state.HasSomeoneWon());
+    }
+
+    [Test]
+    public void TestAcrossColumns()
+    {
+        state.Grid[0, 1] = Player.X;
+        state.Grid[2, 1] = Player.X;
+        state.Grid[0, 2] = Player.X;
+
+        Assert.AreEqual(null, state.HasSomeoneWon());
+    }
+
+    [Test]
+    public void TestLongAcrossRows()
+    {
+        state.Grid[1, 1] = Player.X;
+        state.Grid[1, 2] = Player.X;
+        state.Grid[2, 0] = Player.X;
+        state.Grid[2, 1] = Player.X;
+        state.Grid[2, 2] = Player.X;
+
+        Assert.AreEqual(Player.X, state.HasSomeoneWon());
     }
 
     [Test]

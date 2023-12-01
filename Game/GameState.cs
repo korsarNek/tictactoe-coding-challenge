@@ -69,10 +69,11 @@ public class GameState
 
             if (winningPlayer != null && continousFields == 3)
                 return winningPlayer;
+
+            reset();
         }
 
         //horizontal check
-        reset();
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -80,10 +81,11 @@ public class GameState
 
             if (winningPlayer != null && continousFields == 3)
                 return winningPlayer;
+
+            reset();
         }
 
         //diagonal top left check
-        reset();
         for (int i = 0; i < width && i < height; i++)
             check(i, i);
 
